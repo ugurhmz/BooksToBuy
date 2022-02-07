@@ -1,9 +1,4 @@
-//
-//  ViewController.swift
-//  BooksToBuy
-//
-//  Created by ugur-pc on 7.02.2022.
-//
+
 
 import UIKit
 
