@@ -11,8 +11,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       print("First..")
-        print("SourceTree try")
+        print("SourceTree 3. commit")
     }
 
 
