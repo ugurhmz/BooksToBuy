@@ -63,12 +63,12 @@
 				63C0B00C27B178AF00A6C806 /* AppDelegate.swift */,
 				63C0B00E27B178AF00A6C806 /* SceneDelegate.swift */,
 				63C0B01027B178AF00A6C806 /* ViewController.swift */,
+				63C0B02327B1B42C00A6C806 /* DetailsViewController.swift */,
 				63C0B01227B178AF00A6C806 /* Main.storyboard */,
 				63C0B01827B178B000A6C806 /* Assets.xcassets */,
 				63C0B01A27B178B000A6C806 /* LaunchScreen.storyboard */,
 				63C0B01D27B178B000A6C806 /* Info.plist */,
 				63C0B01527B178AF00A6C806 /* BooksToBuy.xcdatamodeld */,
-				63C0B02327B1B42C00A6C806 /* DetailsViewController.swift */,
 			);
 			path = BooksToBuy;
 			sourceTree = "<group>";
