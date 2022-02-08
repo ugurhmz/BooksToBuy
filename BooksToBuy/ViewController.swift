@@ -11,6 +11,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var idArr = [UUID]()
     var imgArr = [UIImage]()
     
+    var selectedBook = ""
+    var selectedBookId : UUID?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +37,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // ADD BTN - Clicked navigate btn when to go detail-
     @objc func navigateAddBtn(){
+        selectedBook = ""
         performSegue(withIdentifier: "toDetailsVC", sender: nil)
     }
     
@@ -49,13 +53,11 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     // GET DATA
    @objc func getDatas() {
-        
        
        //  remove for Duplicate datas
        nameArr.removeAll(keepingCapacity: false)
        idArr.removeAll(keepingCapacity: false)
        imgArr.removeAll(keepingCapacity: false)
-       
        
        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -84,9 +86,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.imgArr.append(img)
                     }
                     
-                    
                     self.tableView.reloadData() // Refresh Datas
-                    
                 }
             }
             
@@ -111,6 +111,29 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         cell.textLabel?.text = nameArr[indexPath.row]
       
         return cell
+    }
+    
+    
+    // prepare
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {  //segue başlamadan önce çalışacak fonksiyon
+       
+        if segue.identifier == "toDetailsVC" {
+            let  destinationVC =  segue.destination as! DetailsViewController
+            
+            // hedefin.fieldı         // gidelen_yerin_fieldı
+            destinationVC.bookSelected = selectedBook
+            destinationVC.bookSelectedId = selectedBookId
+        }
+        
+    }
+    
+    
+    
+    // didSelectRowAt
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedBook = nameArr[indexPath.row]
+        selectedBookId = idArr[indexPath.row]
+        performSegue(withIdentifier: "toDetailsVC", sender: nil)        // Segue olsun toDetailsVC'ye
     }
 
 
