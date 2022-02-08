@@ -1,6 +1,7 @@
 
 
 import UIKit
+import CoreData
 
 class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
@@ -69,7 +70,41 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
 
     // Save BTN
     @IBAction func saveBtn(_ sender: Any) {
-        print("save clicked...")
+        
+        let myappDelegate = UIApplication.shared.delegate as! AppDelegate
+        let context = myappDelegate.persistentContainer.viewContext
+        
+        let newSaveImage = NSEntityDescription.insertNewObject(forEntityName: "Book", into: context)
+        
+        
+        // Entity fields
+        newSaveImage.setValue(UUID(),            forKey: "id")
+        newSaveImage.setValue(nameField.text!,   forKey: "name")
+        newSaveImage.setValue(authorField.text!, forKey: "author")
+        
+        if let page = Int(pageField.text!) {
+            newSaveImage.setValue(page, forKey: "page")
+        }
+        
+        if let price = Double(priceField.text!) {
+            newSaveImage.setValue(price, forKey: "price")
+        }
+        
+        newSaveImage.setValue(publishedField.text!, forKey: "publishDate" )
+        
+            // convert image
+        let data = imageView.image!.jpegData(compressionQuality: 0.5)
+        newSaveImage.setValue(data, forKey: "image")
+        
+        
+        do {
+            try context.save()
+            print("Success..")
+            
+        } catch {
+            print("ERR!")
+        }
+        
     }
     
 
