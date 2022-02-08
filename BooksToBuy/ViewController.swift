@@ -9,7 +9,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     @IBOutlet weak var tableView: UITableView!
     var nameArr = [String]()
     var idArr = [UUID]()
-    var imgArr = [UIImage]()
     
     var selectedBook = ""
     var selectedBookId : UUID?
@@ -57,7 +56,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
        //  remove for Duplicate datas
        nameArr.removeAll(keepingCapacity: false)
        idArr.removeAll(keepingCapacity: false)
-       imgArr.removeAll(keepingCapacity: false)
        
        
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -82,10 +80,7 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                         self.idArr.append(id)
                     }
                     
-                    if let img = book.value(forKey: "image") as? UIImage {
-                        self.imgArr.append(img)
-                    }
-                    
+                   
                     self.tableView.reloadData() // Refresh Datas
                 }
             }
@@ -134,6 +129,72 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         selectedBook = nameArr[indexPath.row]
         selectedBookId = idArr[indexPath.row]
         performSegue(withIdentifier: "toDetailsVC", sender: nil)        // Segue olsun toDetailsVC'ye
+    }
+    
+    
+    // commit editingStyle -> delete
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        
+        if editingStyle == .delete {
+            
+            // 1- get to db then delete id with id
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            let context = appDelegate.persistentContainer.viewContext
+            
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Book")
+            
+            let idStr = idArr[indexPath.row].uuidString
+            
+            
+            fetchRequest.predicate  = NSPredicate(format: "id = %@", idStr)
+            fetchRequest.returnsObjectsAsFaults = false
+            
+            
+            do {
+                let getBookArr = try context.fetch(fetchRequest)
+                
+                if getBookArr.count > 0 {
+                    for book in getBookArr as! [NSManagedObject] {
+                        
+                        if let id = book.value(forKey: "id") as? UUID {
+                            
+                            
+                            if id ==  idArr[indexPath.row] {   //db id ==  clickedRow.id
+                                context.delete(book)
+                                nameArr.remove(at: indexPath.row)   // delete and return specified position ele
+                                idArr.remove(at: indexPath.row)
+                            
+                        
+                                self.tableView.reloadData() // Madem sildik tableView reload,  q-table refresh gibi..
+                                
+                                do {
+                                    try context.save()
+                                    
+                                } catch {
+                                    print("ERR!")
+                                }
+                                
+                            }
+                                 
+                        }
+                        
+                    }
+                    
+                }
+                
+                
+                
+            } catch {
+                print("Delete ERR!")
+            }
+            
+            
+            
+            
+            
+        }
+        
     }
 
 

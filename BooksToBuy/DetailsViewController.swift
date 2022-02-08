@@ -37,7 +37,7 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
             let idStr = bookSelectedId?.uuidString  // uuid convert to str
             
             
-            fetchRequest.predicate = NSPredicate(format: "id = %@", idStr!) // v
+            fetchRequest.predicate = NSPredicate(format: "id = %@", idStr!) // id'si , idStr'ye eşit olanı bul bana demek.
             fetchRequest.returnsObjectsAsFaults = false
             
             
@@ -84,13 +84,7 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
             } catch {
                 print("Details ERR!")
             }
-            
-            
-            
-            
-            
-            
-            
+             
             
         } else { // New Book
             nameField.text = ""
