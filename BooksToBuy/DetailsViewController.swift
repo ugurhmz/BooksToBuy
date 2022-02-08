@@ -14,6 +14,7 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
     @IBOutlet weak var pageField: UITextField!
     @IBOutlet weak var publishedField: UITextField!
     
+    @IBOutlet weak var saveBtnObject: UIButton!
     
     // come from the VC
     var  bookSelected = ""
@@ -26,6 +27,11 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
 
         
         if bookSelected != "" { //  Already Registered   ,  ID'si zaten var olan
+            
+            
+            saveBtnObject.isHidden = true
+            
+            
             
             // id'si verileni Artık db'den çek. (Repository.findById gibi...)
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -87,6 +93,8 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
              
             
         } else { // New Book
+            saveBtnObject.isHidden = false
+            saveBtnObject.isEnabled = false
             nameField.text = ""
             authorField.text = ""
             priceField.text = ""
@@ -130,6 +138,8 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
                                didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         imageView.image = info[.originalImage] as? UIImage
+        saveBtnObject.isEnabled = true
+        
         self.dismiss(animated: true, completion: nil)
         
         

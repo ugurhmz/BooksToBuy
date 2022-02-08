@@ -184,6 +184,7 @@
                         <outlet property="pageField" destination="l8L-3Y-eyT" id="YO5-Oj-J35"/>
                         <outlet property="priceField" destination="WLb-LQ-D0w" id="rud-O3-GsM"/>
                         <outlet property="publishedField" destination="CiN-jw-BhK" id="qJP-2K-bY1"/>
+                        <outlet property="saveBtnObject" destination="6Z7-EC-ELv" id="z8F-M8-qw1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GSP-et-sGe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
