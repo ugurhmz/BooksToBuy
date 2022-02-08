@@ -99,11 +99,18 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate, 
         
         do {
             try context.save()
+            
+            NotificationCenter.default.post(name: NSNotification.Name("bookData"), object: nil)
+            self.navigationController?.popViewController(animated: true)
+            
             print("Success..")
             
         } catch {
             print("ERR!")
         }
+        
+        
+        
         
     }
     

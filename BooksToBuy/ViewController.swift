@@ -38,10 +38,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     
+    override func viewWillAppear(_ animated: Bool) {
+        NotificationCenter.default.addObserver(self, selector: #selector(getDatas),
+                                               name: NSNotification.Name(rawValue: "bookData"), object: nil)
+    
+    }
+    
+    
+    
     
     // GET DATA
-    func getDatas() {
+   @objc func getDatas() {
         
+       
+       //  remove for Duplicate datas
+       nameArr.removeAll(keepingCapacity: false)
+       idArr.removeAll(keepingCapacity: false)
+       imgArr.removeAll(keepingCapacity: false)
+       
+       
+       
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         let context = appDelegate.persistentContainer.viewContext
         
